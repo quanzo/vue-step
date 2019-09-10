@@ -51,6 +51,8 @@ if ($data) {
         print_r($arTarifs['tarifs']);
         echo '</pre>';*/
 
+        file_put_contents(__DIR__.'/tarifs.json', json_encode($arTarifs['tarifs']));
+
     }
 } else {
     echo ' Unavailable';
@@ -59,7 +61,7 @@ if ($data) {
 <head>
     <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step@1.0.1"></script>
+    <script src="../dist/bundle.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>

@@ -1,0 +1,206 @@
+.fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 2s
+        }
+
+        .fade-enter,
+        .fade-leave-to
+        /* .fade-leave-active в версии ниже 2.1.8 */
+        {
+            opacity: 0
+        }
+        #stepper{
+            width: 30rem;
+            height: 20rem;
+            margin: 2em auto;
+            padding:0;
+        }
+        #stepper .content{
+            width: 30rem;
+            height: 20rem;
+            position:absolute;
+            padding: 0.5em;
+        }
+        #stepper .content-image img{
+            width: auto;
+            height: 100%;
+        }
+/***/
+        body{
+            background-color:#EFEFF4;
+            font-family: 'Roboto', sans-serif;
+        }
+        #choose{
+            
+        }
+        #choose button{
+            
+        }
+        .block{
+            background-color:#fff;
+            border: none;
+            border-top: 1px solid #C8C7CC;
+            border-bottom: 1px solid #C8C7CC;
+            padding: 0;
+            margin: 2rem 0;
+            text-align: left;
+            color: #4D575D;
+
+        }
+        .block .name,
+        .block .info > *,        
+        .text-line{
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+            padding-right: 1rem;
+        }
+        .block .grouped{
+            margin-bottom: 0.5rem;
+        }
+        .block .grouped.gray{
+            color: #aaa;
+        }
+        .block .grouped > *{
+            margin-left: 1rem;
+            margin-bottom:0;
+            padding-right: 2rem;
+        }
+        .block .info{
+            position: relative;
+            padding-right: 2em;
+        }
+        
+        .block .info:before{
+            content: "›";
+            color: #C8C7CC;
+            font-size: 2em;
+            padding: 0.3em;
+            line-height: 0.5em;
+            position:absolute;
+            right:0;
+            height: 10%;
+            bottom: 40%;
+        }
+        .block .speed{
+            margin: 0.5em 0;
+        }
+        .block .name{
+            color: #82C12B;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            margin-right: 0;
+            text-align: left;
+            font-size: 1.5em;
+            line-height: 2em;
+            border-bottom: 1px solid #C8C7CC;
+        }
+        .block a{
+            color: #007AFF;
+            text-decoration: none;
+            display: block;
+            border-top: 1px solid #C8C7CC;
+            padding: 0.5rem 0.5rem 0.5rem 0;
+            margin: 0.5rem 0 0 1rem;
+        }
+        
+        .block .speed:after{
+            clear: both;
+            content: ' ';
+            display: block;
+            font-size: 0;
+            line-height: 0;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+        .block .speed span{
+            float: left;            
+            color: #fff;
+            padding: 0.5em 1rem;
+        }
+        .block.earth .speed span{
+            background-color:#70603E;
+        }
+        .block.fire .speed span{
+            background-color:#E74807
+;
+        }
+        .block.water .speed span{
+            background-color:#0075D9;
+        }
+        .info{
+            margin-bottom: 0.5rem;
+        }
+        .info ul{
+            padding:0;
+            margin:0;
+            padding-bottom: 0.5rem;            
+        }
+        .info ul li{
+            list-style: none;
+            line-height: 1.3em;
+        }
+        
+        .info .price, .info .price-per-month{
+            font-size: 1.1em;
+            font-weight: 500;
+            font-style: normal;
+        }
+        
+        .info .full-price{
+            margin-bottom:0;
+        }
+        button.back{            
+            display: block;
+            background-color:#fff;
+            border: none;
+            border-top: 1px solid #C8C7CC;
+            border-bottom: 1px solid #C8C7CC;
+            padding: 0;
+            margin: 2rem 0;
+            color: #4D575D;
+            font-family: 'Roboto', sans-serif;
+            position:relative;
+            width: 100%;
+            text-align: center;
+            font-size:1.5em;
+            line-height: 3em;
+        }
+        button.back:before{
+            content: "‹";
+            font-weight: bold;
+            color: #82C12B;
+            font-size: 3rem;
+            padding: 0 0.5em;
+            float:left;
+        }
+        .choose-button{
+            display: block;
+            margin: 0.5rem 1rem;
+            background-color: #82C12B;
+            border: none;
+            padding: 1rem 2rem;
+            color: #fff;
+            text-align:center;
+        }
+        @media screen and (max-width: 639px) {}
+        @media screen and (min-width: 640px) and (max-width: 1023px) {
+            .variants{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto;
+            }
+            .variants > div{
+                margin: 0.5em;
+            }
+        }
+        @media screen and (min-width: 1024px) {
+            .variants{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: auto;
+            }
+            .variants > div{
+                margin: 0.5em;
+            }
+        } 

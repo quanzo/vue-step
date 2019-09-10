@@ -1,119 +1,210 @@
 <html>
-
 <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    
-    <script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step@1.0.1"></script>
-    <style>
-        .fade-enter-active,
-        .fade-leave-active {
-            transition: opacity 2s
-        }
-
-        .fade-enter,
-        .fade-leave-to
-        /* .fade-leave-active в версии ниже 2.1.8 */
-        {
-            opacity: 0
-        }
-        #stepper{
-            width: 30rem;
-            height: 20rem;
-            margin: 2em auto;
-            padding:0;
-        }
-        #stepper .content{
-            width: 30rem;
-            height: 20rem;
-            position:absolute;
-            padding: 0.5em;
-        }
-        #stepper .content-image img{
-            width: auto;
-            height: 100%;
-        }
-        
-    </style>
-    
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="../dist/bundle.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="tarif-styles.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-<div id="stepper">
-    <step :auto-start="true" :timeout="7000" name="stepper-slider">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor non lorem in egestas. Duis ut cursus diam, non mollis
-        odio. Aenean at purus eu dolor sodales rhoncus sit amet sit amet enim. Phasellus ultricies mollis orci, et aliquet nibh facilisis
-        sed. Praesent luctus interdum metus, mattis dapibus sapien elementum vitae. Maecenas eget nulla posuere, interdum quam a,
-        efficitur mauris. Curabitur et quam ut est dictum accumsan. In viverra est sit amet malesuada efficitur. Vivamus purus felis,
-        ultrices ac nibh vitae, rutrum tincidunt tortor. Fusce malesuada pharetra tristique. Aenean fringilla convallis euismod.
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque ullamcorper in ipsum
-        tempus malesuada. Pellentesque odio lacus, semper a metus ut, bibendum sodales tortor.</p>
-        <hr>
-            <button @click="goPrev">Previous</button>
-            <button @click="goNext">Next</button>
-        <hr>
-        <block style="background-color:#f00" name="redblock"></block>
-        <block style="background-color:rgb(0, 255, 21)"></block>
-        <block style="background-color:rgb(78, 44, 202)" name="blueblock"></block>
-        <bimg classes="content content-image" src="https://i.pinimg.com/236x/7a/f3/82/7af3822b23a506bdfcc3b59021fe742f--cat-cat-kitty-cats.jpg"></bimg>
-        <bimg classes="content content-image" src="https://data.1freewallpapers.com/thumb/i-m-hungry.jpg" url="http://ya.ru"></bimg>
-        <block-content style="background-color:black;color:antiquewhite">
-            <h2>Content from block</h2>
-            <p>Vestibulum nec orci vel risus ornare tristique. Fusce ac mi maximus, lobortis tellus varius, facilisis nunc. Fusce fermentum
-            faucibus lectus, at cursus nisi blandit sit amet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-            ac turpis egestas. Sed rhoncus neque eget pulvinar lobortis. Nunc fringilla posuere orci, quis egestas ex fermentum non.
-            Cras rhoncus hendrerit gravida. In hac habitasse platea dictumst. Ut malesuada blandit ante et mollis. Integer vulputate
-            magna non turpis posuere, sed lobortis est interdum. Ut tristique ex ut sagittis sodales. Donec id dolor elementum, malesuada
-            augue ut, imperdiet enim.</p>
-            <button @click="clicker">Click!</button>
-            <button @click="goPrev">Previous!</button>
-            <button @click="goNext">Next!</button>
-        </block-content>
-        <block-load-content url="content.html"></block-load-content>
-        <block-load-content url="content.php" reqmethod="GET" :reqparams="{a:1}"></block-load-content>
-    </step>
+        
+<div id="choose">
+	<step :auto-start="false" name="stepbystep">
+        <choose-tarif :tarifs="tarifs"></choose-tarif>
+        <choose-option :tarifs="tarifs"></choose-option>
+        <result-choise :tarifs="tarifs"></result-choise>
+	</step>
 </div>
+
 <script>
-    Vue.component("step", VueStep.Step());
-    Vue.component("block", VueStep.Test("test-block-2"));
-    Vue.component("bimg", VueStep.Image());
-    Vue.component("block-content", VueStep.Content());
-    Vue.component("block-load-content", VueStep.LoadContent());
-
-    var stepper = new Vue({
-            el: "#stepper",
-            data: {                
-            },
-            methods: {
-                findByAttr(attributeName, attributeValue) {
-                    var idx = this.$children.findIndex(function (e, i, array) {                        
-                        if (typeof e.$attrs[attributeName] == "string") {
-                            return e.$attrs[attributeName] == attributeValue;
-                        }
-                        return false;
-                    });
-                    if (idx != -1) {
-                        return this.$children[idx];
-                    }
-                },
-                goNext() {
-                    let s = this.findByAttr("name", "stepper-slider");
-                    if (s) {
-                        s.next();
-                    }
-                },
-                goPrev() {
-                    let s = this.findByAttr("name", "stepper-slider");
-                    if (s) {
-                        s.prev();
-                    }
-                },
-                clicker() {
-                    console.log("click!");
-                }                
+	Vue.component("step", VueStep.Step());
+    State = {
+        tarif: false,
+        option: false,
+        month: function (size) {
+                var m = " месяцев";
+                if (size==1) {
+                    m = " месяц";
+                }
+                if (size>1 && size<=4) {
+                    m = " месяца";
+                }
+                return size+m;
             }
-        });
-    /***********/
-</script>
+    };
+    /******/
+    Vue.component("choose-tarif", {
+        inject: ["nextStep"],
+        props: ["tarifs"],
+        data() {
+            return {
+                state: State,
+                displayed: false
+            };
+        },
+        methods: {
+            chooseTarif(id) {                
+                if (id >= 0 && id < this.tarifs.length) {
+                    this.state.tarif = id;
+                    //console.log(id, this.state, this.state.tarif);
+                    this.nextStep();
+                }                 
+            },
+            classTarif(id) {
+                let type = "earth";
+                let name = this.tarifs[id].title.toLowerCase();
+                let vars = {
+                    water: "вода",
+                    fire: "огонь"
+                };
+                for (var o in vars) {
+                    if (name.indexOf(vars[o]) != -1) {
+                        type = o;
+                        break;
+                    }
+                }
+                return type+" block";
+            }
+        },
+        template: '<div class="choose-tarif" v-if="displayed">\
+            <div class="variants">\
+            <div :class="classTarif(id)" v-for="(tarif, id) of tarifs" @click="chooseTarif(id)" :key="id" :data-id="id">\
+            <div class="text-line name">Тариф "{{tarif.title}}"</div>\
+            <div class="info">\
+                <div class="speed"><span>{{tarif.speed}} Мбит/с</span></div>\
+                <div class="text-line price">{{tarif.price_min}} - {{tarif.price_max}} ₽</div>\
+                <ul v-if="tarif.free_options">\
+                    <li v-for="fo in tarif.free_options">{{fo}}</li>\
+                </ul>\
+            </div>\
+            <a :href=tarif.link>Узнать подробнее на сайте sknt.ru</a>\
+            </div>\
+            </div>\
+        </div>'
+    });
+    /******/
+    Vue.component("choose-option", {
+        inject: ["nextStep", "prevStep"],
+        props: ["tarifs"],
+        data() {
+            return {
+                state: State,
+                displayed: false
+            };
+        },
+        methods: {
+            chooseOption(id) {                
+                if (this.state.tarif !== false && id >= 0 && id < this.tarifs[this.state.tarif].tarifs.length) {
+                    this.state.option = id;
+                    this.nextStep();
+                }                 
+            },
+            back() {
+                this.state.tarif = false;
+                this.state.option = false;
+                this.prevStep();
+            },
+            tarifName() {
+                return this.tarifs[this.state.tarif].title;
+            },
+            options() {
+                return this.tarifs[this.state.tarif].tarifs
+            },
+            payPerMonth(one_option) {
+                return one_option.price/one_option.pay_period
+            }
+        },
+        template: '<div class="choose-option" v-if="displayed">\
+        <button @click="back" class="back"> Тариф "{{tarifName()}}" </button>\
+        <div class="variants">\
+        <div class="block" v-for="(one_option, id) in options()" @click="chooseOption(id)">\
+            <div class="text-line name">{{state.month(one_option.pay_period)}}</div>\
+            <div class="info">\
+                <div class="price-per-month">{{payPerMonth(one_option)}} ₽/мес</div>\
+                <div class="full-price">разовый платеж — {{one_option.price}} ₽</div>\
+                <div class="discount" v-if="one_option.discount">скидка — {{one_option.discount}} ₽</div>\
+            </div>\
+        </div>\
+        </div>\
+        </div>'
+    });
+    /******/
+    Vue.component("result-choise", {
+        inject: ["prevStep"],
+        props: ["tarifs"],
+        data() {
+            return {
+                state: State,
+                displayed: false,
+                
+            };
+        },
+        methods: {
+            back() {                
+                State.option = false;
+                this.prevStep();
+            },
+            currentTarif() {                
+                return this.tarifs[this.state.tarif];                
+            },
+            currentOption() {
+                return this.currentTarif["tarifs"][this.state.option];
+            },
+            pricePerMonth: function () {
+                return this.currentOption().price/this.currentOption().pay_period;
+            },
+            choosedVar() {
+                console.log(this.info);
+            }
+        },
+        computed: {
+            info() {
+                var tarif = this.tarifs[this.state.tarif];
+                var option = tarif.tarifs[this.state.option];
+                var data = {
+                    payPeriod: this.state.month(option.pay_period),
+                    tarifName: "Тариф \""+tarif.title+"\"",
+                    option: option,
+                    tarif: tarif,
+                    payPerMonth: option.price/option.pay_period
+                };
+                //console.log(data);
+                return data;
+            }
+        },
+        template: '<div class="result" v-if="displayed">\
+            <button @click="back" class="back"> Выбор тарифа </button>\
+            <div class="block">\
+                <div class="text-line name">{{info.tarifName}}</div>\
+                <div class="grouped">\
+                    <div class="pay-period">Период оплаты — {{info.payPeriod}}</div>\
+                    <div>{{info.payPerMonth}} ₽/мес</div>\
+                </div>\
+                <div class="grouped">\
+                    <div>разовый платеж — {{info.option.price}} ₽</div>\
+                    <div>со счета спишется — {{info.option.price}} ₽</div>\
+                </div>\
+                <div class="grouped gray">\
+                    <div>вступит в силу — сегодня</div>\
+                    <div>активно до — {{info.option.new_payday_text}}</div>\
+                </div>\
+                <div class="choose-button" @click="choosedVar">Выбрать</div>\
+            </div>\
+        </div>'    
+    });
 
+    /******/
+    var choose = new Vue({
+        el: "#choose",
+        data: {
+            tarifs: [{ "title": "\u0417\u0435\u043c\u043b\u044f", "tarifs": [{ "ID": 1, "title": "\u0417\u0435\u043c\u043b\u044f", "price": 480, "price_add": 0, "pay_period": "1", "new_payday": "1450213200+0300", "speed": 50, "new_payday_text": "15.12.2015", "discount": 0 }, { "ID": 2, "title": "\u0417\u0435\u043c\u043b\u044f (3 \u043c\u0435\u0441\u044f\u0446\u0430)", "price": 1350, "price_add": 0, "pay_period": "3", "new_payday": "1452891600+0300", "speed": 50, "new_payday_text": "15.01.2016", "discount": 90 }, { "ID": 3, "title": "\u0417\u0435\u043c\u043b\u044f (6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 2460, "price_add": 0, "pay_period": "6", "new_payday": "1460754000+0300", "speed": 50, "new_payday_text": "15.04.2016", "discount": 420 }, { "ID": 4, "title": "\u0417\u0435\u043c\u043b\u044f (12 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 4200, "price_add": 0, "pay_period": "12", "new_payday": "1476565200+0300", "speed": 50, "new_payday_text": "15.10.2016", "discount": 1560 }], "link": "http:\/\/www.sknt.ru\/tarifi_internet\/in\/1.htm", "speed": 50, "price_add": 0, "price_min": 350, "price_max": 480 }, { "title": "\u0412\u043e\u0434\u0430", "tarifs": [{ "ID": 5, "title": "\u0412\u043e\u0434\u0430", "price": 600, "price_add": 0, "pay_period": "1", "new_payday": "1450213200+0300", "speed": 100, "new_payday_text": "15.12.2015", "discount": 0 }, { "ID": 6, "title": "\u0412\u043e\u0434\u0430 (3 \u043c\u0435\u0441\u044f\u0446\u0430)", "price": 1650, "price_add": 0, "pay_period": "3", "new_payday": "1452891600+0300", "speed": 100, "new_payday_text": "15.01.2016", "discount": 150 }, { "ID": 7, "title": "\u0412\u043e\u0434\u0430 (6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 3060, "price_add": 0, "pay_period": "6", "new_payday": "1460754000+0300", "speed": 100, "new_payday_text": "15.04.2016", "discount": 540 }, { "ID": 8, "title": "\u0412\u043e\u0434\u0430 (12 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 5400, "price_add": 0, "pay_period": "12", "new_payday": "1476565200+0300", "speed": 100, "new_payday_text": "15.10.2016", "discount": 1800 }], "link": "http:\/\/www.sknt.ru\/tarifi_internet\/in\/2.htm", "speed": 100, "price_add": 0, "free_options": ["\u0422\u0412 \u043f\u0430\u043a\u0435\u0442 \"\u0421\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0422\u0412\"", "\u0410\u043d\u0442\u0438\u0432\u0438\u0440\u0443\u0441 Agnitum Outpost"], "price_min": 450, "price_max": 600 }, { "title": "\u041e\u0433\u043e\u043d\u044c", "tarifs": [{ "ID": 9, "title": "\u041e\u0433\u043e\u043d\u044c", "price": 800, "price_add": 0, "pay_period": "1", "new_payday": "1450213200+0300", "speed": 200, "new_payday_text": "15.12.2015", "discount": 0 }, { "ID": 10, "title": "\u041e\u0433\u043e\u043d\u044c (3 \u043c\u0435\u0441\u044f\u0446\u0430)", "price": 2250, "price_add": 0, "pay_period": "3", "new_payday": "1452891600+0300", "speed": 200, "new_payday_text": "15.01.2016", "discount": 150 }, { "ID": 11, "title": "\u041e\u0433\u043e\u043d\u044c (6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 4260, "price_add": 0, "pay_period": "6", "new_payday": "1460754000+0300", "speed": 200, "new_payday_text": "15.04.2016", "discount": 540 }, { "ID": 12, "title": "\u041e\u0433\u043e\u043d\u044c (12 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 7800, "price_add": 0, "pay_period": "12", "new_payday": "1476565200+0300", "speed": 200, "new_payday_text": "15.10.2016", "discount": 1800 }], "link": "http:\/\/www.sknt.ru\/tarifi_internet\/in\/3.htm", "speed": 200, "price_add": 0, "free_options": ["\u0422\u0412 \u043f\u0430\u043a\u0435\u0442 \"\u0421\u043e\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u0422\u0412\"", "\u0410\u043d\u0442\u0438\u0432\u0438\u0440\u0443\u0441 Agnitum Outpost", "\u0414\u043e\u043c\u0435\u043d\u043d\u043e\u0435 \u0438\u043c\u044f \u0432 \u0437\u043e\u043d\u0435 sknt.ru"], "price_min": 650, "price_max": 800 }, { "title": "\u0412\u043e\u0434\u0430 HD", "tarifs": [{ "ID": 13, "title": "\u0412\u043e\u0434\u0430 HD", "price": 800, "price_add": 0, "pay_period": "1", "new_payday": "1450213200+0300", "speed": 100, "new_payday_text": "15.12.2015", "discount": 0 }, { "ID": 14, "title": "\u0412\u043e\u0434\u0430 HD (3 \u043c\u0435\u0441\u044f\u0446\u0430)", "price": 2250, "price_add": 0, "pay_period": "3", "new_payday": "1452891600+0300", "speed": 100, "new_payday_text": "15.01.2016", "discount": 150 }, { "ID": 15, "title": "\u0412\u043e\u0434\u0430 HD (6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 4260, "price_add": 0, "pay_period": "6", "new_payday": "1460754000+0300", "speed": 100, "new_payday_text": "15.04.2016", "discount": 540 }, { "ID": 16, "title": "\u0412\u043e\u0434\u0430 HD (12 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 7800, "price_add": 0, "pay_period": "12", "new_payday": "1476565200+0300", "speed": 100, "new_payday_text": "15.10.2016", "discount": 1800 }], "link": "http:\/\/www.sknt.ru\/sky-tv\/in\/2.htm", "speed": 100, "price_add": 0, "free_options": ["\u0422\u0412 \u043f\u0430\u043a\u0435\u0442 \"\u0422\u0412\"", "\u0410\u043d\u0442\u0438\u0432\u0438\u0440\u0443\u0441 Agnitum Outpost", "\u0414\u043e\u043c\u0435\u043d\u043d\u043e\u0435 \u0438\u043c\u044f \u0432 \u0437\u043e\u043d\u0435 sknt.ru"], "price_min": 650, "price_max": 800 }, { "title": "\u041e\u0433\u043e\u043d\u044c HD", "tarifs": [{ "ID": 17, "title": "\u041e\u0433\u043e\u043d\u044c HD", "price": 1000, "price_add": 0, "pay_period": "1", "new_payday": "1450213200+0300", "speed": 200, "new_payday_text": "15.12.2015", "discount": 0 }, { "ID": 18, "title": "\u041e\u0433\u043e\u043d\u044c HD (3 \u043c\u0435\u0441\u044f\u0446\u0430)", "price": 2700, "price_add": 0, "pay_period": "3", "new_payday": "1452891600+0300", "speed": 200, "new_payday_text": "15.01.2016", "discount": 300 }, { "ID": 19, "title": "\u041e\u0433\u043e\u043d\u044c HD (6 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 5160, "price_add": 0, "pay_period": "6", "new_payday": "1460754000+0300", "speed": 200, "new_payday_text": "15.04.2016", "discount": 840 }, { "ID": 20, "title": "\u041e\u0433\u043e\u043d\u044c HD (12 \u043c\u0435\u0441\u044f\u0446\u0435\u0432)", "price": 9600, "price_add": 0, "pay_period": "12", "new_payday": "1476565200+0300", "speed": 200, "new_payday_text": "15.10.2016", "discount": 2400 }], "link": "http:\/\/www.sknt.ru\/sky-tv\/in\/3.htm", "speed": 200, "price_add": 0, "free_options": ["\u0422\u0412 \u043f\u0430\u043a\u0435\u0442 \"\u0422\u0412\"", "\u0410\u043d\u0442\u0438\u0432\u0438\u0440\u0443\u0441 Agnitum Outpost", "\u0414\u043e\u043c\u0435\u043d\u043d\u043e\u0435 \u0438\u043c\u044f \u0432 \u0437\u043e\u043d\u0435 sknt.ru"], "price_min": 800, "price_max": 1000 }]
+        },
+        methods: {},
+        computed: {},
+    });
+	
+</script>
 </body>
 </html>
