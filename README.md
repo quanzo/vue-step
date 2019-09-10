@@ -123,6 +123,20 @@ Image output
 
  
 
+| params     | default                | type     | description                                        |
+|------------|------------------------|----------|----------------------------------------------------|
+| src        |                        | string   |                                                    |
+| url        | “”                     | string   | If present, the picture will be wrapped in a link. |
+| title      | “”                     | string   | attribute image                                    |
+| alt        | “”                     | string   | attribute image                                    |
+| transition | fade                   | string   |                                                    |
+| styles     | “”                     | string   | css styles                                         |
+| classes    | content                | string   | css classes                                        |
+| onShow     | function(component) {} | function | Will be called when this block is shown.           |
+| onHide     | function(component) {} | function | Will be called when this block is hidden.          |
+
+ 
+
 ### VueStep.Content
 
 Display specified content
@@ -133,7 +147,34 @@ Display specified content
 </block-content>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- 
+| params     | default                | type     | description                               |
+|------------|------------------------|----------|-------------------------------------------|
+| onShow     | function(component) {} | function | Will be called when this block is shown.  |
+| onHide     | function(component) {} | function | Will be called when this block is hidden. |
+| transition | fade                   | string   |                                           |
+| styles     | “”                     | string   | css styles                                |
+| classes    | content                | string   | css classes                               |
+
+Use all provided step-component methods in content
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<block-content style="background-color:black;color:antiquewhite">
+    <template v-slot="{ nextStep }">
+        <h2>This content</h2>
+        <button @click="nextStep()">Next</button>
+    </template>
+</block-content>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+or
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<block-content style="background-color:black;color:antiquewhite">
+    <template v-slot="params">
+        <button @click="params.nextStep()">Next</button>
+    </template>
+</block-content>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### VueStep.LoadContent
 
@@ -141,5 +182,18 @@ Download content from a source and display it. Content is only loaded when
 displayed.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<block-load-content url="content.html"></block-load-content>
+<block-load-content url="content.html" reqmethod="GET"></block-load-content>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| param          | default                                         | type     | description                                                                                     |
+|----------------|-------------------------------------------------|----------|-------------------------------------------------------------------------------------------------|
+| url            |                                                 | string   |                                                                                                 |
+| reqmethod      | GET                                             | string   | method of request                                                                               |
+| reqparams      | {}                                              | object   | additional params of request                                                                    |
+| beforeRequest  | function(component, reqParams) { return true; } | function | It will be called before an ajax request. If it returns false, the request will not take place. |
+| successRequest | function(component) {}                          | function | Will be called after a successful ajax request.                                                 |
+| onShow         | function(component) {}                          | function | Will be called when this block is shown.                                                        |
+| onHide         | function(component) {}                          | function | Will be called when this block is hidden.                                                       |
+| transition     | fade                                            | string   |                                                                                                 |
+| styles         | “”                                              | string   | css styles                                                                                      |
+| classes        | content                                         | string   | css classes                                                                                     |
