@@ -23,6 +23,14 @@ export default {
     classes: {
       type: String,
       default: "content"
+    },
+    reqmethod: {
+      type: String,
+      default: "GET"
+    },
+    reqparams: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -50,18 +58,43 @@ export default {
       } else {
         // load content from url
         var request = new XMLHttpRequest();
-        request.open("POST", this.url, true);
+        var params = "";
+        if (this.reqparams) {
+          for (var key in this.reqparams) {
+            if (params) {
+              params += "&";              
+            }
+            params += key + "=" + encodeURIComponent(this.reqparams[key]);
+          }
+        }
+        var url2req = this.url;
+        if (params && this.reqmethod.toLowerCase() == "get") {
+          if (url2req.indexOf("?") != -1) {
+            url2req += "&";
+          } else {
+            url2req += "?";
+          }
+          url2req += params;
+        }
+        
+        request.open(this.reqmethod, url2req, true);
         request.addEventListener("readystatechange", function() {
           block.params.loadedContent = true;
           if (request.readyState == 4 && request.status == 200) {
             block.params.content = request.responseText;
           }
         });
-        request.setRequestHeader(
-          "Content-Type",
-          "application/x-www-form-urlencoded"
-        );
-        request.send();
+        
+        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        
+        if (this.reqmethod.toLowerCase() == "get") {
+          request.send();
+        } else {
+          request.send(params);
+        }
+        
       }
     }
   },

@@ -5,3 +5,4 @@ yarn.lock
 .git
 v8-compile-cache*/*
 docs/*
+npm-debug.log
