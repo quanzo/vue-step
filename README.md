@@ -28,6 +28,25 @@ list.
 метод, предоставленный компонентом Step. Условием перехода может являться
 правильно заполненная форма или выбранный вариант из списка.
 
+ 
+
+Install via NPM
+---------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+npm i --save-dev @quanzo/vue-step
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Load from CDN
+-------------
+
+You can load specific version of package from [jsDelivr
+CDN](https://cdn.jsdelivr.net/npm/@quanzo/personality@2.0.0).
+
+`<script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step"></script>`
+
+ 
+
 Methods provided by the component Step
 --------------------------------------
 
