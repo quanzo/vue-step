@@ -9,8 +9,9 @@ export default {
 //var VueStep  = {
 //module.exports.Step = function(block_name = "Step") {
 //  return {
-    //module.exports.default = {
+    //module.exports.default = {  
     name: "Step",
+    inject: ["nextStep", "prevStep", "toStep", "toStepAttr", "countSteps", "possiblePrevStep", "possibleNextStep", "stopAutoStep"],
     props: {
       autoStart: {
         type: Boolean,

@@ -22,6 +22,14 @@ export default {
     classes: {
       type: String,
       default: "content"
+    },
+    onShow: {
+      type: Function,
+      default: function(component) {}
+    },
+    onHide: {
+      type: Function,
+      default: function(component) {}
     }
   },
   inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep"],
@@ -29,6 +37,17 @@ export default {
     return {
       displayed: false
     };
+  },
+  watch: {
+    displayed(newVal, oldVal) {
+      if (newVal != oldVal) {
+        if (newVal) {
+          this.onShow(this);
+        } else {
+          this.onHide(this);
+        }
+      }
+    }
   }
 };
 </script>

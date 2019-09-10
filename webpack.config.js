@@ -1,7 +1,14 @@
+const devMode = process.env.NODE_ENV !== 'production';
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/step.js',
+  optimization: {
+    minimizer: [
+      new TerserJSPlugin({})
+    ],
+  },
   module: {
     rules: [
       {

@@ -31,6 +31,24 @@ export default {
     reqparams: {
       type: Object,
       default: {}
+    },
+    beforeRequest: {
+      type: Function,
+      default: function(component, reqParams) {
+        return true;
+      }
+    },
+    successRequest: {
+      type: Function,
+      default: function(component) {}
+    },
+    onShow: {
+      type: Function,
+      default: function(component) {}
+    },
+    onHide: {
+      type: Function,
+      default: function(component) {}
     }
   },
   data() {
@@ -41,6 +59,17 @@ export default {
         loadedContent: false
       }
     };
+  },
+  watch: {
+    displayed(newVal, oldVal) {
+      if (newVal != oldVal) {
+        if (newVal) {
+          this.onShow(this);
+        } else {
+          this.onHide(this);
+        }
+      }
+    }
   },
   computed: {
     displayed: {
@@ -58,11 +87,12 @@ export default {
       } else {
         // load content from url
         var request = new XMLHttpRequest();
+
         var params = "";
         if (this.reqparams) {
           for (var key in this.reqparams) {
             if (params) {
-              params += "&";              
+              params += "&";
             }
             params += key + "=" + encodeURIComponent(this.reqparams[key]);
           }
@@ -76,25 +106,61 @@ export default {
           }
           url2req += params;
         }
-        
-        request.open(this.reqmethod, url2req, true);
-        request.addEventListener("readystatechange", function() {
-          block.params.loadedContent = true;
-          if (request.readyState == 4 && request.status == 200) {
-            block.params.content = request.responseText;
-          }
-        });
-        
-        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        
-        
-        if (this.reqmethod.toLowerCase() == "get") {
-          request.send();
-        } else {
-          request.send(params);
+
+        var reqParams = {
+          method: this.reqmethod,
+          url: url2req,
+          body: params
         }
-        
+        var allowed = this.beforeRequest(this, reqParams);
+        if (allowed) {          
+          request.open(reqParams.method, reqParams.url, true);
+          request.onprogress = function(event) {
+            var out = "Loading ";
+            if (event.lengthComputable) {
+              let progressBarCount = 10;
+              let progress = Math.ceil(event.loaded/(event.total/progressBarCount));              
+              for (var i = 0; i<progressBarCount; i++) {
+                if (i<progress) {
+                  out += "■";
+                } else {
+                  out += "□";
+                }
+              }
+              if (block.params.content != out) {
+                block.params.content = out;
+              }
+            } else {
+              out = "Loading...";
+              if (block.params.content != out) {
+                block.params.content = out;
+              }
+            }
+          };
+          request.onload = function() {
+            if (request.status == 200) {
+              block.params.loadedContent = true;
+              block.successRequest(block);
+              block.params.content = request.responseText;
+            } else { // error
+              console.log("Error request to "+reqParams.url+" "+request.status+" "+request.statusText);
+              block.params.loadedContent = true;
+              block.params.content = "";              
+            }
+          };          
+
+          request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+          request.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+          );
+
+          if (reqParams.method.toLowerCase() == "get") {
+            request.send();
+          } else {
+            request.send(reqParams.body);
+          }
+        }
       }
     }
   },
