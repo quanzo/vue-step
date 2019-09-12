@@ -7,7 +7,9 @@ consistently display a questionnaire or a psychological test.
 Other components act as blocks.
 
 Such a component must have the `displayed` property, which controls whether or
-not to display this component on the screen.
+not to display this component on the screen. If this property is absent, then it
+(the component without \`displayed\`) does not participate in the switch. It is
+displayed as usual. May use methods of the Step component.
 
 The condition for the further transition must be defined in the component and
 the method provided by the Step component must be called. The condition for the
@@ -22,7 +24,9 @@ list.
 В качестве блоков выступают другие компоненты.
 
 Такой компонент должен иметь свойство `displayed`, которое управляет отображать
-или нет этот компонент на экране.
+или нет этот компонент на экране. Если это свойство отсутствует, то он
+(компонент без `displayed`) не учавствует в переключении. Выводится как обычно.
+Может использовать методы компонента Step.
 
 В компоненте должно быть определено условие для дальнейшего перехода и вызван
 метод, предоставленный компонентом Step. Условием перехода может являться
