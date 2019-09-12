@@ -1,7 +1,7 @@
 <template>
     <transition :name="transition">
         <div :style="styles" :class="classes" v-if="displayed">
-          <slot :nextStep="stepNext" :prevStep="stepPrev" possiblePrevStep:="" :possibleNextStep="stepPrevPossible" :toStep="stepTo" :toStepAttr="stepAttrTo" :stopAutoStep="autoStepStop" :countSteps="stepsCount">              
+          <slot :nextStep="stepNext" :prevStep="stepPrev" :possiblePrevStep="stepPrevPossible" :possibleNextStep="stepNextPossible" :toStep="stepTo" :toStepAttr="stepAttrTo" :stopAutoStep="autoStepStop" :countSteps="stepsCount" :currentStep="stepCurrent">
           </slot>
         </div>
     </transition>
@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "block-content",
-  inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep", "toStep", "toStepAttr", "stopAutoStep", "countSteps"],
+  inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep", "toStep", "toStepAttr", "stopAutoStep", "countSteps", "currentStep"],
   props: {    
     transition: {
       type: String,
@@ -35,9 +35,7 @@ export default {
   },
   data() {
     return {
-      params: {
-        show: false        
-      }
+      showMe: false
     };
   },
   methods: {
@@ -64,15 +62,18 @@ export default {
     },
     stepsCount() {
       return this.countSteps();
+    },
+    stepCurrent() {
+      return this.currentStep();
     }
   },  
   computed: {
     displayed: {
       get() {
-        return this.params.show;
+        return this.showMe;
       },
       set(v) {
-        this.params.show = v;
+        this.showMe = v;
       }
     },
     component() {
