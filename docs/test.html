@@ -2,7 +2,8 @@
 
 <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step"></script>
     <script src="../dist/bundle.js"></script>
     <style>
         .fade-enter-active,
@@ -39,7 +40,9 @@
 
 <body>
 <div id="stepper">
+    
     <step :auto-start="true" :timeout="7000" name="stepper-slider">
+        <button-prev></button-prev>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor non lorem in egestas. Duis ut cursus diam, non mollis
         odio. Aenean at purus eu dolor sodales rhoncus sit amet sit amet enim. Phasellus ultricies mollis orci, et aliquet nibh facilisis
         sed. Praesent luctus interdum metus, mattis dapibus sapien elementum vitae. Maecenas eget nulla posuere, interdum quam a,
@@ -51,6 +54,7 @@
             <button @click="goPrev">Previous</button>
             <button @click="goNext">Next</button>
         <hr>
+        <indicate></indicate>
         <block style="background-color:#f00" name="redblock"></block>
         <block style="background-color:rgb(0, 255, 21)"></block>
         <block style="background-color:rgb(78, 44, 202)" name="blueblock"></block>
@@ -60,6 +64,7 @@
             <template v-slot="params">
                 <h2>Content from block</h2>
                 <button @click="params.nextStep()">Next</button>
+                <p>In #{{params.currentStep()}} of #{{params.countSteps()}}</p>
                 <p>Vestibulum nec orci vel risus ornare tristique. Fusce ac mi maximus, lobortis tellus varius, facilisis nunc. Fusce fermentum
             faucibus lectus, at cursus nisi blandit sit amet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
             ac turpis egestas. Sed rhoncus neque eget pulvinar lobortis. Nunc fringilla posuere orci, quis egestas ex fermentum non.
@@ -81,6 +86,8 @@
     Vue.component("bimg", VueStep.Image());
     Vue.component("block-content", VueStep.Content());
     Vue.component("block-load-content", VueStep.LoadContent());
+    Vue.component("indicate", VueStep.Indicate());
+    Vue.component("button-prev", VueStep.ButtonPrev());
 
     var stepper = new Vue({
             el: "#stepper",
