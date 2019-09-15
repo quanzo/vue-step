@@ -5,8 +5,10 @@
 </template>
 
 <script>
+const mixDisplayed = require('./displayed.mix.js');
 export default {
   name: "block-load-content",
+  mixins: [mixDisplayed.default],
   props: {
     url: {
       type: String,
@@ -41,45 +43,17 @@ export default {
     successRequest: {
       type: Function,
       default: function(component) {}
-    },
-    onShow: {
-      type: Function,
-      default: function(component) {}
-    },
-    onHide: {
-      type: Function,
-      default: function(component) {}
     }
   },
   data() {
     return {
       params: {
-        show: false,
         content: "",
         loadedContent: false
       }
     };
   },
-  watch: {
-    displayed(newVal, oldVal) {
-      if (newVal != oldVal) {
-        if (newVal) {
-          this.onShow(this);
-        } else {
-          this.onHide(this);
-        }
-      }
-    }
-  },
   computed: {
-    displayed: {
-      get() {
-        return this.params.show;
-      },
-      set(v) {
-        this.params.show = v;
-      }
-    },
     content() {
       var block = this;
       if (this.params.loadedContent) {
@@ -163,9 +137,6 @@ export default {
         }
       }
     }
-  },
-  reload() {
-    this.params.loadedContent = false;
   }
 };
 </script>

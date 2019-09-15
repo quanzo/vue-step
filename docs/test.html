@@ -6,96 +6,217 @@
     <script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step"></script>
     <script src="../dist/bundle.js"></script>
     <style>
+        
+        
         .fade-enter-active,
         .fade-leave-active {
-            transition: opacity 2s
+            transition: opacity 5s
         }
+        /*#stepper-one .content.fade-enter-active{
+            position: absolute;
+            left: initial;
+            top: initial;
+
+        }
+        #stepper-one .content.fade-enter-active + .fade-leave-active{
+            position: relative;
+            left: initial;
+            top: initial;
+
+        }*/
+
+
+        #stepper-one .content.fade-leave-active{}
 
         .fade-enter,
         .fade-leave-to
         /* .fade-leave-active в версии ниже 2.1.8 */
-        {
+
+            {
             opacity: 0
         }
-        #stepper{
+
+        #stepper {
             width: 30rem;
             height: 20rem;
             margin: 2em auto;
-            padding:0;
+            padding: 0;
         }
-        #stepper .content{
+
+        #stepper .content {
             width: 30rem;
             height: 20rem;
-            position:absolute;
+            position: absolute;
             padding: 0.5em;
         }
-        #stepper .content-image img{
+
+        #stepper .content-image img {
             width: auto;
             height: 100%;
         }
-        
+        .viewport{
+            position: relative;
+        }
+        .button-prev, .button-next{
+            position: absolute;
+        }
+        .button-prev{
+            left:0;
+        }
+        .button-next{
+            right:0;
+        }
+        #stepper-one{
+            display: block;            
+            position:relative;
+        }
+        #stepper-one .viewport{
+            width: 100%;
+            height: 20rem;
+        }
+        #stepper-one .viewport > *{
+            box-sizing: border-box;
+            position: relative;
+        }
+        #stepper-one .viewport .button-prev, #stepper-one .viewport .button-next{
+            position: absolute;
+            z-index: 1001;
+            top:49%;
+            top: calc(50% - 1.5em);
+            cursor: pointer;
+            width: 3em;
+            height: 3em;
+            fill: #e2a70d;
+        }
+        #stepper-one .viewport .button-prev.hover, #stepper-one .viewport .button-next.hover{
+            fill: #b96f07;
+        }
+        #stepper-one .viewport .button-prev{
+            left:0;
+            margin-left: -1.5em;
+        }
+        #stepper-one .viewport .button-next{
+            right: 0;
+            margin-right: -1.5em;
+        }
+        #stepper-one .content{            
+            width: 100%;
+            height: 20rem;
+            position: absolute;
+        }
     </style>
-    
+
 </head>
 
 <body>
-<div id="stepper">
-    
-    <step :auto-start="true" :timeout="7000" name="stepper-slider">
-        <button-prev></button-prev>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor non lorem in egestas. Duis ut cursus diam, non mollis
-        odio. Aenean at purus eu dolor sodales rhoncus sit amet sit amet enim. Phasellus ultricies mollis orci, et aliquet nibh facilisis
-        sed. Praesent luctus interdum metus, mattis dapibus sapien elementum vitae. Maecenas eget nulla posuere, interdum quam a,
-        efficitur mauris. Curabitur et quam ut est dictum accumsan. In viverra est sit amet malesuada efficitur. Vivamus purus felis,
-        ultrices ac nibh vitae, rutrum tincidunt tortor. Fusce malesuada pharetra tristique. Aenean fringilla convallis euismod.
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque ullamcorper in ipsum
-        tempus malesuada. Pellentesque odio lacus, semper a metus ut, bibendum sodales tortor.</p>
+    <div id="stepper">
+        <block-content style="background-color:rgb(178, 230, 194);color:rgb(77, 77, 77)" :displayed="false">
+            <p>***</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor non lorem in egestas. Duis ut cursus diam,
+                non mollis odio. Aenean at purus eu dolor sodales rhoncus sit amet sit amet enim. Phasellus ultricies mollis
+                orci, et aliquet nibh facilisis sed. Praesent luctus interdum metus, mattis dapibus sapien elementum vitae.
+                Maecenas eget nulla posuere, interdum quam a, efficitur mauris. Curabitur et quam ut est dictum accumsan.</p>
+            <p>***</p>
+        </block-content>
         <hr>
+        <step :auto-start="true" :timeout="15000" name="stepper-one" id="stepper-one">
+                <div class="viewport">                    
+                    <button-prev>
+                        <svg id="btn1650left" class="sliderButton leftBtn" style="display: block; z-index: 1000" viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                            <g>
+                                <path d="M54.644,29.359l-18.75,17.188c-0.966,0.888-1.519,2.138-1.519,3.453s0.553,2.565,1.519,3.456l18.75,17.188l0.01-0.013 	c0.837,0.766,1.938,1.244,3.159,1.244c2.588,0,4.688-2.1,4.688-4.688c0-1.369-0.594-2.588-1.528-3.443l0.01-0.013L46,50  l14.981-13.731l-0.01-0.013c0.935-0.855,1.528-2.078,1.528-3.443c0-2.588-2.1-4.688-4.688-4.688c-1.222,0-2.322,0.479-3.159,1.244 L54.644,29.359z  M0,50c0,27.612,22.388,50,50,50s50-22.388,50-50S77.612,0,50,0S0,22.388,0,50z M90.625,50 C90.625,72.4,72.4,90.625,50,90.625S9.375,72.4,9.375,50S27.6,9.375,50,9.375S90.625,27.6,90.625,50z"></path>
+                            </g>
+                        </svg>
+                    </button-prev>
+                    
+                    <block style="background-color:#f00" name="redblock"></block>
+                    <block style="background-color:rgb(0, 255, 21)"></block>
+                    <block style="background-color:rgb(78, 44, 202)" name="blueblock"></block>
+
+                    <button-next>
+                        <svg id="btn1650right" class="sliderButton rightBtn" style="display: block; z-index: 1001"
+                            viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                            <g>
+                                <path d="M45.356,70.641l18.75-17.188c0.966-0.888,1.519-2.138,1.519-3.453s-0.553-2.565-1.519-3.456l-18.75-17.188l-0.01,0.013 c-0.837-0.766-1.938-1.244-3.159-1.244c-2.588,0-4.688,2.1-4.688,4.688c0,1.369,0.594,2.588,1.528,3.443l-0.01,0.013L54,50 L39.019,63.731l0.01,0.013C38.094,64.6,37.5,65.822,37.5,67.188c0,2.588,2.1,4.688,4.688,4.688c1.222,0,2.322-0.479,3.159-1.244 L45.356,70.641z M100,50c0-27.612-22.388-50-50-50S0,22.388,0,50s22.388,50,50,50S100,77.612,100,50z M9.375,50 C9.375,27.6,27.6,9.375,50,9.375S90.625,27.6,90.625,50S72.4,90.625,50,90.625S9.375,72.4,9.375,50z"></path>
+                            </g>
+                        </svg>
+                    </button-next>
+                </div>
+            <indicate></indicate>
+        </step>
+        <hr>
+        <step :auto-start="true" :timeout="7000" name="stepper-slider">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris auctor non lorem in egestas. Duis ut cursus diam,
+                non mollis odio. Aenean at purus eu dolor sodales rhoncus sit amet sit amet enim. Phasellus ultricies mollis
+                orci, et aliquet nibh facilisis sed. Praesent luctus interdum metus, mattis dapibus sapien elementum vitae.
+                Maecenas eget nulla posuere, interdum quam a, efficitur mauris. Curabitur et quam ut est dictum accumsan.
+                In viverra est sit amet malesuada efficitur. Vivamus purus felis, ultrices ac nibh vitae, rutrum tincidunt
+                tortor. Fusce malesuada pharetra tristique. Aenean fringilla convallis euismod. Vestibulum ante ipsum primis
+                in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque ullamcorper in ipsum tempus malesuada.
+                Pellentesque odio lacus, semper a metus ut, bibendum sodales tortor.</p>
+            <hr>
+            <p>Application Implementation</p>
             <button @click="goPrev">Previous</button>
             <button @click="goNext">Next</button>
-        <hr>
-        <indicate></indicate>
-        <block style="background-color:#f00" name="redblock"></block>
-        <block style="background-color:rgb(0, 255, 21)"></block>
-        <block style="background-color:rgb(78, 44, 202)" name="blueblock"></block>
-        <bimg classes="content content-image" src="https://i.pinimg.com/236x/7a/f3/82/7af3822b23a506bdfcc3b59021fe742f--cat-cat-kitty-cats.jpg"></bimg>
-        <bimg classes="content content-image" src="https://data.1freewallpapers.com/thumb/i-m-hungry.jpg" url="http://ya.ru"></bimg>
-        <block-content style="background-color:black;color:antiquewhite">
-            <template v-slot="params">
-                <h2>Content from block</h2>
-                <button @click="params.nextStep()">Next</button>
-                <p>In #{{params.currentStep()}} of #{{params.countSteps()}}</p>
-                <p>Vestibulum nec orci vel risus ornare tristique. Fusce ac mi maximus, lobortis tellus varius, facilisis nunc. Fusce fermentum
-            faucibus lectus, at cursus nisi blandit sit amet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-            ac turpis egestas. Sed rhoncus neque eget pulvinar lobortis. Nunc fringilla posuere orci, quis egestas ex fermentum non.
-            Cras rhoncus hendrerit gravida. In hac habitasse platea dictumst. Ut malesuada blandit ante et mollis. Integer vulputate
-            magna non turpis posuere, sed lobortis est interdum. Ut tristique ex ut sagittis sodales. Donec id dolor elementum, malesuada
-            augue ut, imperdiet enim.</p>
-            <button @click="clicker">Click!</button>
-            <button @click="goPrev">Previous!</button>
-            <button @click="goNext">Next!</button>
-            </template>
-        </block-content>
-        <block-load-content url="content.html"></block-load-content>
-        <block-load-content url="content.php" reqmethod="GET" :reqparams="{a:1}"></block-load-content>
-    </step>
-</div>
-<script>
-    Vue.component("step", VueStep.Step());
-    Vue.component("block", VueStep.Test("test-block-2"));
-    Vue.component("bimg", VueStep.Image());
-    Vue.component("block-content", VueStep.Content());
-    Vue.component("block-load-content", VueStep.LoadContent());
-    Vue.component("indicate", VueStep.Indicate());
-    Vue.component("button-prev", VueStep.ButtonPrev());
+            <hr>
+            <indicate></indicate>
+            
+                <button-prev><svg id="btn1650left" class="sliderButton leftBtn slider-btn-show  " style="width: 3em; height: 3em; display: block; z-index: 1000; visibility: visible;"
+                    viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                    <g>
+                        <path d="M54.644,29.359l-18.75,17.188c-0.966,0.888-1.519,2.138-1.519,3.453s0.553,2.565,1.519,3.456l18.75,17.188l0.01-0.013 	c0.837,0.766,1.938,1.244,3.159,1.244c2.588,0,4.688-2.1,4.688-4.688c0-1.369-0.594-2.588-1.528-3.443l0.01-0.013L46,50  l14.981-13.731l-0.01-0.013c0.935-0.855,1.528-2.078,1.528-3.443c0-2.588-2.1-4.688-4.688-4.688c-1.222,0-2.322,0.479-3.159,1.244 L54.644,29.359z  M0,50c0,27.612,22.388,50,50,50s50-22.388,50-50S77.612,0,50,0S0,22.388,0,50z M90.625,50 C90.625,72.4,72.4,90.625,50,90.625S9.375,72.4,9.375,50S27.6,9.375,50,9.375S90.625,27.6,90.625,50z"></path>
+                    </g>
+                </svg></button-prev>
+                
+                    
+                    <bimg classes="content content-image" src="https://i.pinimg.com/236x/7a/f3/82/7af3822b23a506bdfcc3b59021fe742f--cat-cat-kitty-cats.jpg"></bimg>
+                    <bimg classes="content content-image" src="https://data.1freewallpapers.com/thumb/i-m-hungry.jpg" url="http://ya.ru"></bimg>
+                    <block-content style="background-color:black;color:antiquewhite">
+                        <template v-slot="params">
+                            <h2>Content from block</h2>
+                            <button @click="params.nextStep()">Next</button>
+                            <p>In #{{params.currentStep()}} of #{{params.countSteps()}}</p>
+                            <p>Vestibulum nec orci vel risus ornare tristique. Fusce ac mi maximus, lobortis tellus varius,
+                                facilisis nunc. Fusce fermentum faucibus lectus, at cursus nisi blandit sit amet. Pellentesque
+                                habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed rhoncus
+                                neque eget pulvinar lobortis. Nunc fringilla posuere orci, quis egestas ex fermentum non.
+                                Cras rhoncus hendrerit gravida. In hac habitasse platea dictumst. Ut malesuada blandit ante
+                                et mollis. Integer vulputate magna non turpis posuere, sed lobortis est interdum. Ut tristique
+                                ex ut sagittis sodales. Donec id dolor elementum, malesuada augue ut, imperdiet enim.</p>
+                            <button @click="clicker">Click!</button>
+                            <button @click="goPrev">Previous!</button>
+                            <button @click="goNext">Next!</button>
+                        </template>
+                    </block-content>
+                    <block-load-content url="content.html"></block-load-content>
+                    <block-load-content url="content.php" reqmethod="GET" :reqparams="{a:1}"></block-load-content>
+                
+                <button-next><svg id="btn1650right" class="sliderButton rightBtn slider-btn-show" style="width: 3em; height: 3em; display: block; z-index: 1000; visibility: visible;"
+                    viewBox="0 0 100 100" preserveAspectRatio="xMinYMin meet">
+                    <g>
+                        <path d="M45.356,70.641l18.75-17.188c0.966-0.888,1.519-2.138,1.519-3.453s-0.553-2.565-1.519-3.456l-18.75-17.188l-0.01,0.013 c-0.837-0.766-1.938-1.244-3.159-1.244c-2.588,0-4.688,2.1-4.688,4.688c0,1.369,0.594,2.588,1.528,3.443l-0.01,0.013L54,50 L39.019,63.731l0.01,0.013C38.094,64.6,37.5,65.822,37.5,67.188c0,2.588,2.1,4.688,4.688,4.688c1.222,0,2.322-0.479,3.159-1.244 L45.356,70.641z M100,50c0-27.612-22.388-50-50-50S0,22.388,0,50s22.388,50,50,50S100,77.612,100,50z M9.375,50 C9.375,27.6,27.6,9.375,50,9.375S90.625,27.6,90.625,50S72.4,90.625,50,90.625S9.375,72.4,9.375,50z"></path>
+                    </g>
+                </svg></button-next>
+            
+        </step>
+    </div>
+    <script>
+        Vue.component("step", VueStep.Step());
+        Vue.component("block", VueStep.Test("test-block-2"));
+        Vue.component("bimg", VueStep.Image());
+        Vue.component("block-content", VueStep.Content());
+        Vue.component("block-load-content", VueStep.LoadContent());
+        Vue.component("indicate", VueStep.Indicate());
+        Vue.component("button-prev", VueStep.ButtonPrev());
+        Vue.component("button-next", VueStep.ButtonNext());
 
-    var stepper = new Vue({
+        var stepper = new Vue({
             el: "#stepper",
-            data: {                
+            data: {
             },
             methods: {
                 findByAttr(attributeName, attributeValue) {
-                    var idx = this.$children.findIndex(function (e, i, array) {                        
+                    var idx = this.$children.findIndex(function (e, i, array) {
                         if (typeof e.$attrs[attributeName] == "string") {
                             return e.$attrs[attributeName] == attributeValue;
                         }
@@ -119,11 +240,14 @@
                 },
                 clicker() {
                     console.log("click!");
-                }                
+                }
             }
         });
     /***********/
-</script>
+    </script>
+
+    
 
 </body>
+
 </html>

@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: "button-prev",
-  inject: ["possiblePrevStep", "registerEventListener", "prevStep"],
+  name: "button-next",
+  inject: ["possibleNextStep", "registerEventListener", "nextStep"],
   data() {
     return {
       possible: false,
@@ -25,15 +25,15 @@ export default {
     },
     classes: {
       type: String,
-      default: "button-prev"
+      default: "button-next"
     }    
   },
   methods: {
     onStep(params) {
-      this.possible = this.possiblePrevStep();
+      this.possible = this.possibleNextStep();
     },
     action(i) {
-        this.prevStep();        
+        this.nextStep();        
     },
     hover() {
       this.addClass = "hover";
@@ -52,7 +52,7 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
-      this.possible = this.possiblePrevStep();      
+      this.possible = this.possibleNextStep();      
     });
     this.registerEventListener("event-step-to", this.onStep);
   }

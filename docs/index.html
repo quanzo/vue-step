@@ -16,11 +16,13 @@
         <choose-tarif :tarifs="tarifs"></choose-tarif>
         <choose-option :tarifs="tarifs"></choose-option>
         <result-choise :tarifs="tarifs"></result-choise>
+        <indicate></indicate>
 	</step>
 </div>
 
 <script>
 	Vue.component("step", VueStep.Step());
+    Vue.component("indicate", VueStep.Indicate());
     State = {
         tarif: false,
         option: false,
@@ -49,6 +51,7 @@
             chooseTarif(id) {                
                 if (id >= 0 && id < this.tarifs.length) {
                     this.state.tarif = id;
+                    this.state.option = false;
                     //console.log(id, this.state, this.state.tarif);
                     this.nextStep();
                 }                 
@@ -117,6 +120,13 @@
                 return one_option.price/one_option.pay_period
             }
         },
+        watch:{
+            displayed(newVal, oldVal) {
+                if (newVal && this.state.tarif === false) {
+                    this.prevStep();
+                }
+            }
+        },
         template: '<div class="choose-option" v-if="displayed">\
         <button @click="back" class="back"> Тариф "{{tarifName()}}" </button>\
         <div class="variants">\
@@ -144,7 +154,7 @@
         },
         methods: {
             back() {                
-                State.option = false;
+                this.state.option = false;
                 this.prevStep();
             },
             currentTarif() {                
@@ -173,6 +183,13 @@
                 };
                 //console.log(data);
                 return data;
+            }
+        },
+        watch: {
+            displayed(newVal, oldVal) {
+                if (newVal && (this.state.tarif === false || this.state.option === false)) {
+                    this.prevStep();
+                }
             }
         },
         template: '<div class="result" v-if="displayed">\

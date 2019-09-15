@@ -8,8 +8,11 @@
 </template>
 
 <script>
+const mixDisplayed = require('./displayed.mix.js');
+
 export default {
   name: "block-content",
+  mixins: [mixDisplayed.default],
   inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep", "toStep", "toStepAttr", "stopAutoStep", "countSteps", "currentStep"],
   props: {    
     transition: {
@@ -23,20 +26,10 @@ export default {
     classes: {
       type: String,
       default: "content"
-    },
-    onShow: {
-      type: Function,
-      default: function(component) {}
-    },
-    onHide: {
-      type: Function,
-      default: function(component) {}
     }
   },
   data() {
-    return {
-      showMe: false
-    };
+    return {};
   },
   methods: {
     stepNext() {      
@@ -65,30 +58,6 @@ export default {
     },
     stepCurrent() {
       return this.currentStep();
-    }
-  },  
-  computed: {
-    displayed: {
-      get() {
-        return this.showMe;
-      },
-      set(v) {
-        this.showMe = v;
-      }
-    },
-    component() {
-      return this;
-    }
-  },
-  watch: {
-    displayed(newVal, oldVal) {
-      if (newVal != oldVal) {
-        if (newVal) {
-          this.onShow(this);
-        } else {
-          this.onHide(this);
-        }
-      }
     }
   }
 };

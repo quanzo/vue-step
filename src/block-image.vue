@@ -10,8 +10,11 @@
 </template>
 
 <script>
+const mixDisplayed = require('./displayed.mix.js');
 export default {
   name: "block-image",
+  mixins: [mixDisplayed.default],
+  inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep"],
   props: {
     src: {
       type: String,
@@ -44,32 +47,10 @@ export default {
     classes: {
       type: String,
       default: "content"
-    },
-    onShow: {
-      type: Function,
-      default: function(component) {}
-    },
-    onHide: {
-      type: Function,
-      default: function(component) {}
     }
-  },
-  inject: ["nextStep", "prevStep", "possiblePrevStep", "possibleNextStep"],
+  },  
   data() {
-    return {
-      displayed: false
-    };
-  },
-  watch: {
-    displayed(newVal, oldVal) {
-      if (newVal != oldVal) {
-        if (newVal) {
-          this.onShow(this);
-        } else {
-          this.onHide(this);
-        }
-      }
-    }
+    return {};
   }
 };
 </script>
