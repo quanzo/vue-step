@@ -54,16 +54,25 @@ CDN](https://cdn.jsdelivr.net/npm/@quanzo/personality@2.0.0).
 Methods provided by the component Step
 --------------------------------------
 
-| provide                                  | component method                     | return  |                                |
-|------------------------------------------|--------------------------------------|---------|--------------------------------|
-| nextStep()                               | next()                               |         | forward one step               |
-| prevStep()                               | prev()                               |         | one step back                  |
-| toStep(index)                            | to(index)                            |         | go to slide by number          |
-| toStepAttr(atributeName, attributeValue) | toAttr(atributeName, attributeValue) |         |                                |
-| countSteps()                             | count()                              | integer | total number of elements       |
-| possiblePrevStep()                       | possiblePrev()                       | boolean | is it possible to step back    |
-| possibleNextStep()                       | possibleNext()                       | boolean | is it possible to step forward |
-| stopAutoStep()                           | stop()                               |         | stop auto switch               |
+| provide                                  | component method                     | return  |                                                       |
+|------------------------------------------|--------------------------------------|---------|-------------------------------------------------------|
+| nextStep()                               | next()                               |         | forward one step                                      |
+| prevStep()                               | prev()                               |         | one step back                                         |
+| toStep(index)                            | to(index)                            |         | go to slide by number                                 |
+| toStepAttr(atributeName, attributeValue) | toAttr(atributeName, attributeValue) |         |                                                       |
+| countSteps()                             | count()                              | integer | total number of elements                              |
+| possiblePrevStep()                       | possiblePrev()                       | boolean | is it possible to step back                           |
+| possibleNextStep()                       | possibleNext()                       | boolean | is it possible to step forward                        |
+| stopAutoStep()                           | stop()                               |         | stop auto switch                                      |
+| currentStep()                            |                                      | integer | current step number                                   |
+| registerEventListener(eventName, func)   |                                      |         | Registers a function on an event. function(params={}) |
+
+Events
+------
+
+| event         | \$emit | event params                                     |                                                          |
+|---------------|--------|--------------------------------------------------|----------------------------------------------------------|
+| event-step-to | yes    | {to: ..., from: ..., count: ..., component: ...} | The event will be triggered after going to another step. |
 
 Options
 -------

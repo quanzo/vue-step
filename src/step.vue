@@ -22,7 +22,7 @@ export default {
     "stopAutoStep",
     "currentStep"
   ],
-  _events: {},
+  
 
   props: {
     autoStart: {
@@ -61,7 +61,8 @@ export default {
       current: 0,
       timer: false,
       timermsec: 0,
-      accepted: []
+      accepted: [],
+      events: {}
     };
   },
   methods: {
@@ -168,14 +169,14 @@ export default {
       }, msec);
     },
     registerEventListener(eventName, f) {
-      if (typeof this._events[eventName] != "object") {
-        this._events[eventName] = [];
+      if (typeof this.events[eventName] != "object") {
+        this.events[eventName] = [];
       }
-      this._events[eventName][this._events[eventName].length] = f;
+      this.events[eventName][this.events[eventName].length] = f;
     },
     startEvent(eventName, params = {}) {
-      if (typeof this._events[eventName] == "object") {
-        let funcs = this._events[eventName];
+      if (typeof this.events[eventName] == "object") {
+        let funcs = this.events[eventName];
         for (var idx in funcs) {
           if (typeof funcs[idx] == "function") {
             funcs[idx](params);
