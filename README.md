@@ -45,7 +45,7 @@ Load from CDN
 -------------
 
 You can load specific version of package from [jsDelivr
-CDN](https://cdn.jsdelivr.net/npm/@quanzo/personality@2.0.0).
+CDN](https://cdn.jsdelivr.net/npm/@quanzo/vue-step).
 
 `<script src="https://cdn.jsdelivr.net/npm/@quanzo/vue-step"></script>`
 
