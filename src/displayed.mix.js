@@ -1,6 +1,11 @@
 export default {
+    data() {
+        return {
+            displayed: this.display
+        };
+    },
     props: {
-        displayed: {
+        display: {
             type: Boolean,
             default: false
         },

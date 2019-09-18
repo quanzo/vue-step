@@ -11,7 +11,7 @@ export default {
   //  return {
   //module.exports.default = {
   name: "Step",
-  inject: [
+  /*inject: [
     "nextStep",
     "prevStep",
     "toStep",
@@ -21,7 +21,7 @@ export default {
     "possibleNextStep",
     "stopAutoStep",
     "currentStep"
-  ],
+  ],*/
   
 
   props: {

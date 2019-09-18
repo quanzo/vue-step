@@ -32,7 +32,11 @@ export default {
     },
     reqparams: {
       type: Object,
-      default: {}
+      default: function () { return {}; }
+    },
+    defContent: {
+      type: String,
+      default: ""
     },
     beforeRequest: {
       type: Function,
@@ -48,7 +52,7 @@ export default {
   data() {
     return {
       params: {
-        content: "",
+        content: this.defContent,
         loadedContent: false
       }
     };
